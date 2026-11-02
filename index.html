@@ -81,7 +81,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
         .logo-icon {
@@ -191,7 +191,7 @@
             font-size: clamp(28px, 5vw, 36px);
             font-weight: 700;
             line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #be123c, #db2777);
             -webkit-background-clip: text;
@@ -203,7 +203,7 @@
             font-size: clamp(15px, 2vw, 17px);
             line-height: 1.65;
             color: #7f1d3a;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             max-width: 520px;
             margin-left: auto;
             margin-right: auto;
@@ -218,8 +218,8 @@
             font-size: clamp(14px, 1.8vw, 15px);
             line-height: 1.75;
             color: #9f5b6b;
-            margin-bottom: 36px;
-            max-width: 540px;
+            margin-bottom: 40px;
+            max-width: 520px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -227,35 +227,6 @@
         .details strong {
             color: #be123c;
             font-weight: 600;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 228, 230, 0.8);
-            border: 1px solid rgba(251, 113, 133, 0.4);
-            border-radius: 100px;
-            padding: 9px 20px;
-            margin-bottom: 40px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #be123c;
-            box-shadow: 0 8px 20px -10px rgba(244, 63, 94, 0.3);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #f43f5e;
-            border-radius: 50%;
-            animation: pulse 1.8s ease-in-out infinite;
-            box-shadow: 0 0 8px rgba(244, 63, 94, 0.8);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
         .divider {
@@ -311,7 +282,7 @@
         }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 32px;
             font-size: 13px;
             color: #b07a89;
         }
@@ -322,7 +293,7 @@
                 border-radius: 24px;
             }
             .logo {
-                margin-bottom: 32px;
+                margin-bottom: 28px;
             }
             .clock {
                 width: 80px;
@@ -331,6 +302,9 @@
             .hand.hour { height: 22px; }
             .hand.minute { height: 28px; }
             .hand.second { height: 32px; }
+            .details {
+                margin-bottom: 32px;
+            }
             .social-btn {
                 padding: 10px 18px;
                 font-size: 14px;
@@ -357,22 +331,15 @@
         <h1>Идут технические работы</h1>
 
         <p class="subtitle">
-            Сайт <strong>intown-app.ru</strong> и мобильное приложение временно недоступны. 
-            Мы уже работаем над восстановлением.
+            Сайт <strong>intown-app.ru</strong> и мобильное приложение временно недоступны.
         </p>
 
         <p class="details">
-            Причиной стали <strong>аварийные работы на стороне хостинг-провайдера</strong>, 
-            где размещены наш бэкенд и база данных. Специалисты уже устраняют неполадки, 
-            и как только доступ будет восстановлен, сервис заработает в полном объёме. 
-            Все ваши данные и заказы сохранены — они в полной безопасности. 
-            Приносим искренние извинения за доставленные неудобства и благодарим за понимание.
+            Причиной стала <strong>авария на стороне хостинг-провайдера</strong>, где размещены 
+            наш бэкенд и база данных. Специалисты уже устраняют неполадки — как только доступ 
+            восстановится, сервис заработает в полном объёме. Все данные сохранены. 
+            Приносим извинения за неудобства.
         </p>
-
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            Восстановление в процессе
-        </div>
 
         <div class="divider"></div>
 
