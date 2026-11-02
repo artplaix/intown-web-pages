@@ -6,7 +6,7 @@
     <title>intown-app.ru — Технические работы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,66 +20,74 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            color: #f8fafc;
+            background: radial-gradient(circle at 20% 20%, #7f1d1d 0%, #450a0a 45%, #1a0505 100%);
+            color: #fef2f2;
             padding: 20px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Декоративные элементы на фоне */
+        /* Декоративные красные «пятна» на фоне */
         body::before,
         body::after {
             content: '';
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
+            filter: blur(90px);
+            opacity: 0.35;
             z-index: 0;
         }
 
         body::before {
             width: 600px;
             height: 600px;
-            background: #3b82f6;
+            background: #dc2626;
             top: -200px;
-            right: -100px;
+            right: -150px;
+            animation: float 12s ease-in-out infinite;
         }
 
         body::after {
             width: 500px;
             height: 500px;
-            background: #8b5cf6;
-            bottom: -150px;
+            background: #991b1b;
+            bottom: -180px;
             left: -150px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 640px;
+            max-width: 680px;
             width: 100%;
             text-align: center;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(50, 10, 10, 0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(248, 113, 113, 0.15);
             border-radius: 32px;
-            padding: 64px 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 56px 44px;
+            box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.7),
+                        0 0 0 1px rgba(248, 113, 113, 0.05) inset;
         }
 
         .logo {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
         }
 
         .logo-icon {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, #ef4444, #991b1b);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -87,81 +95,156 @@
             font-weight: 700;
             font-size: 22px;
             color: #fff;
+            box-shadow: 0 8px 20px -6px rgba(239, 68, 68, 0.6);
         }
 
         .logo-text {
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: #f8fafc;
+            color: #fef2f2;
         }
 
         .logo-text span {
-            color: #60a5fa;
+            color: #f87171;
         }
 
-        .icon-wrapper {
+        /* Анимированные часы */
+        .clock-wrapper {
             display: flex;
             justify-content: center;
             margin-bottom: 32px;
         }
 
-        .icon {
-            width: 72px;
-            height: 72px;
-            background: rgba(59, 130, 246, 0.15);
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .clock {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: rgba(127, 29, 29, 0.4);
+            border: 2px solid rgba(248, 113, 113, 0.3);
+            position: relative;
+            box-shadow: 0 0 0 8px rgba(127, 29, 29, 0.15),
+                        0 12px 30px -8px rgba(0, 0, 0, 0.6);
         }
 
-        .icon svg {
-            width: 36px;
-            height: 36px;
-            stroke: #60a5fa;
-            stroke-width: 1.5;
-            fill: none;
+        .clock::before {
+            /* Точки-метки на циферблате */
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 6px, #f87171 1.5px, transparent 2px),
+                radial-gradient(circle at 50% calc(100% - 6px), #f87171 1.5px, transparent 2px),
+                radial-gradient(circle at 6px 50%, #f87171 1.5px, transparent 2px),
+                radial-gradient(circle at calc(100% - 6px) 50%, #f87171 1.5px, transparent 2px);
+        }
+
+        .hand {
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform-origin: bottom center;
+            background: #fef2f2;
+            border-radius: 4px;
+        }
+
+        .hand.hour {
+            width: 3px;
+            height: 26px;
+            margin-left: -1.5px;
+            background: #fecaca;
+            animation: rotate 43200s linear infinite;
+        }
+
+        .hand.minute {
+            width: 2.5px;
+            height: 34px;
+            margin-left: -1.25px;
+            background: #fee2e2;
+            animation: rotate 3600s linear infinite;
+        }
+
+        .hand.second {
+            width: 1.5px;
+            height: 38px;
+            margin-left: -0.75px;
+            background: #ef4444;
+            animation: rotate 60s linear infinite;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            margin: -4px 0 0 -4px;
+            background: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         h1 {
             font-size: clamp(28px, 5vw, 36px);
             font-weight: 700;
             line-height: 1.2;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             letter-spacing: -0.5px;
+            color: #fef2f2;
         }
 
         .subtitle {
             font-size: clamp(15px, 2vw, 17px);
-            line-height: 1.6;
-            color: #94a3b8;
-            margin-bottom: 40px;
-            max-width: 480px;
+            line-height: 1.65;
+            color: #fca5a5;
+            margin-bottom: 20px;
+            max-width: 520px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .details {
+            font-size: clamp(14px, 1.8vw, 15px);
+            line-height: 1.7;
+            color: #e5b4b4;
+            margin-bottom: 36px;
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .details strong {
+            color: #fecaca;
+            font-weight: 600;
         }
 
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.2);
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 100px;
-            padding: 8px 20px;
+            padding: 9px 20px;
             margin-bottom: 40px;
             font-size: 14px;
             font-weight: 600;
-            color: #fbbf24;
+            color: #fca5a5;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
-            background: #fbbf24;
+            background: #ef4444;
             border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 1.8s ease-in-out infinite;
+            box-shadow: 0 0 8px #ef4444;
         }
 
         @keyframes pulse {
@@ -169,69 +252,80 @@
             50% { opacity: 0.4; transform: scale(0.8); }
         }
 
-        .progress-bar {
-            width: 100%;
-            max-width: 320px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 100px;
-            margin: 0 auto 40px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 60%;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            border-radius: 100px;
-            animation: loading 3s ease-in-out infinite;
-        }
-
-        @keyframes loading {
-            0% { width: 20%; }
-            50% { width: 80%; }
-            100% { width: 20%; }
-        }
-
         .divider {
             height: 1px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(248, 113, 113, 0.15);
             margin-bottom: 32px;
         }
 
-        .note {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #64748b;
+        .social-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fca5a5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
         }
 
-        .note a {
-            color: #60a5fa;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
             text-decoration: none;
-            border-bottom: 1px solid rgba(96, 165, 250, 0.3);
-            transition: border-color 0.2s;
+            color: #fef2f2;
+            background: rgba(127, 29, 29, 0.5);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            transition: all 0.2s ease;
         }
 
-        .note a:hover {
-            border-color: #60a5fa;
+        .social-btn:hover {
+            background: rgba(185, 28, 28, 0.6);
+            border-color: rgba(248, 113, 113, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -8px rgba(239, 68, 68, 0.5);
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
         .footer {
             margin-top: 40px;
             font-size: 13px;
-            color: #475569;
+            color: #b08080;
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 48px 24px;
+                padding: 44px 24px;
                 border-radius: 24px;
             }
             .logo {
-                margin-bottom: 36px;
-            }
-            .status-badge {
                 margin-bottom: 32px;
+            }
+            .clock {
+                width: 80px;
+                height: 80px;
+            }
+            .hand.hour { height: 22px; }
+            .hand.minute { height: 28px; }
+            .hand.second { height: 32px; }
+            .social-btn {
+                padding: 10px 18px;
+                font-size: 14px;
             }
         }
     </style>
@@ -243,19 +337,29 @@
             <div class="logo-text">in<span>town</span></div>
         </div>
 
-        <div class="icon-wrapper">
-            <div class="icon">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 6v6l4 2" />
-                    <circle cx="12" cy="12" r="10" />
-                </svg>
+        <!-- Анимированные часы -->
+        <div class="clock-wrapper">
+            <div class="clock">
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+                <div class="clock-center"></div>
             </div>
         </div>
 
-        <h1>Технические работы</h1>
+        <h1>Идут технические работы</h1>
+
         <p class="subtitle">
-            Мы обновляем инфраструктуру, чтобы сделать intown ещё быстрее и надёжнее. 
-            Приложение и сайт временно недоступны.
+            Сайт <strong style="color:#fecaca;">intown-app.ru</strong> и мобильное приложение 
+            временно недоступны. Мы уже работаем над восстановлением.
+        </p>
+
+        <p class="details">
+            Причиной стали <strong>аварийные работы на стороне хостинг-провайдера</strong>, 
+            где размещены наш бэкенд и база данных. Специалисты уже устраняют неполадки, 
+            и как только доступ будет восстановлен, сервис заработает в полном объёме. 
+            Все ваши данные и заказы сохранены — они в полной безопасности. 
+            Приносим искренние извинения за доставленные неудобства и благодарим за понимание.
         </p>
 
         <div class="status-badge">
@@ -263,17 +367,24 @@
             Восстановление в процессе
         </div>
 
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-
         <div class="divider"></div>
 
-        <p class="note">
-            Следите за обновлениями в нашем 
-            <a href="https://t.me/intown_app" target="_blank" rel="noopener">Telegram-канале</a>. 
-            Приносим извинения за неудобства.
-        </p>
+        <p class="social-title">Следите за обновлениями</p>
+
+        <div class="social-links">
+            <a href="https://vk.com/intown_app" target="_blank" rel="noopener" class="social-btn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974H.916c-.713 0-.854.329-.854.684 0 .806 2.104 4.86 4.658 8.267 2.313 3.084 4.81 2.946 6.94 2.946z"/>
+                </svg>
+                ВКонтакте
+            </a>
+            <a href="https://max.ru/intown_app" target="_blank" rel="noopener" class="social-btn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.79.473 3.47 1.302 4.925L2 22l5.196-1.271A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm4.74 13.599c-.176.49-1.03.945-1.42.98-.39.036-.755.184-2.528-.527-2.14-.86-3.5-3.03-3.606-3.17-.106-.14-.86-1.145-.86-2.184 0-1.04.55-1.55.745-1.762.194-.21.423-.263.564-.263.14 0 .282.001.404.008.13.006.303-.05.474.362.176.423.598 1.459.65 1.565.053.106.088.23.018.37-.07.14-.106.227-.21.35-.106.123-.222.276-.318.37-.106.106-.216.22-.093.432.123.21.546.902 1.171 1.46.804.717 1.483.94 1.693 1.046.21.106.334.088.457-.053.123-.14.528-.616.669-.827.14-.21.281-.176.474-.106.194.07 1.229.58 1.44.686.21.106.35.159.404.247.053.088.053.51-.123 1z"/>
+                </svg>
+                MAX
+            </a>
+        </div>
 
         <div class="footer">
             © 2026 intown-app.ru
