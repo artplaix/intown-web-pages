@@ -44,13 +44,15 @@
             padding-left: max(20px, env(safe-area-inset-left));
             padding-right: max(20px, env(safe-area-inset-right));
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* Декоративные пятна — fixed, чтобы не влияли на прокрутку */
         body::before,
         body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             filter: blur(100px);
             z-index: 0;
@@ -131,6 +133,7 @@
             color: #f43f5e;
         }
 
+        /* ───────── Часы ───────── */
         .clock-wrapper {
             display: flex;
             justify-content: center;
@@ -138,77 +141,119 @@
         }
 
         .clock {
-            width: 96px;
-            height: 96px;
+            --size: 104px;
+            width: var(--size);
+            height: var(--size);
             border-radius: 50%;
-            background: linear-gradient(145deg, #ffffff, #ffe4e6);
-            border: 2px solid rgba(251, 113, 133, 0.35);
             position: relative;
-            box-shadow: 0 0 0 8px rgba(255, 228, 230, 0.6),
-                        0 14px 30px -10px rgba(244, 63, 94, 0.3);
+            background: radial-gradient(circle at 50% 32%, #ffffff 0%, #fff1f2 55%, #ffe4e6 100%);
+            box-shadow:
+                0 0 0 5px rgba(255, 255, 255, 0.9),
+                0 0 0 6px rgba(251, 113, 133, 0.22),
+                0 18px 36px -14px rgba(244, 63, 94, 0.5),
+                inset 0 3px 8px rgba(255, 255, 255, 0.95),
+                inset 0 -6px 12px rgba(251, 113, 133, 0.12);
+            flex-shrink: 0;
         }
 
-        .clock::before {
+        /* Деления */
+        .ticks {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .tick {
+            position: absolute;
+            inset: 0;
+            transform: rotate(calc(var(--i) * 30deg));
+        }
+
+        .tick::before {
             content: '';
             position: absolute;
-            inset: 8px;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 50% 6px, #fb7185 1.5px, transparent 2px),
-                radial-gradient(circle at 50% calc(100% - 6px), #fb7185 1.5px, transparent 2px),
-                radial-gradient(circle at 6px 50%, #fb7185 1.5px, transparent 2px),
-                radial-gradient(circle at calc(100% - 6px) 50%, #fb7185 1.5px, transparent 2px);
+            top: calc(var(--size) * 0.085);
+            left: 50%;
+            width: 2px;
+            height: calc(var(--size) * 0.055);
+            margin-left: -1px;
+            border-radius: 2px;
+            background: rgba(251, 113, 133, 0.45);
         }
 
+        .tick.major::before {
+            width: 2.5px;
+            height: calc(var(--size) * 0.08);
+            margin-left: -1.25px;
+            background: rgba(225, 29, 72, 0.7);
+        }
+
+        /* Стрелки */
         .hand {
             position: absolute;
             left: 50%;
             bottom: 50%;
-            transform-origin: bottom center;
-            border-radius: 4px;
+            transform-origin: 50% 100%;
+            border-radius: 100px;
+            will-change: transform;
         }
 
         .hand.hour {
-            width: 3px;
-            height: 26px;
-            margin-left: -1.5px;
-            background: #be123c;
-            animation: rotate 43200s linear infinite;
+            width: 4.5px;
+            height: calc(var(--size) * 0.25);
+            margin-left: -2.25px;
+            background: linear-gradient(180deg, #9f1239, #be123c);
+            box-shadow: 0 2px 6px rgba(190, 24, 93, 0.25);
+            z-index: 1;
         }
 
         .hand.minute {
-            width: 2.5px;
-            height: 34px;
-            margin-left: -1.25px;
-            background: #e11d48;
-            animation: rotate 3600s linear infinite;
+            width: 3.5px;
+            height: calc(var(--size) * 0.33);
+            margin-left: -1.75px;
+            background: linear-gradient(180deg, #be123c, #e11d48);
+            box-shadow: 0 2px 6px rgba(190, 24, 93, 0.25);
+            z-index: 2;
         }
 
         .hand.second {
-            width: 1.5px;
-            height: 38px;
-            margin-left: -0.75px;
-            background: #f43f5e;
-            animation: rotate 60s linear infinite;
+            width: 1.8px;
+            height: calc(var(--size) * 0.36);
+            margin-left: -0.9px;
+            background: linear-gradient(180deg, #fb7185, #e11d48);
+            box-shadow: 0 0 8px rgba(244, 63, 94, 0.55);
+            z-index: 3;
+        }
+
+        /* Противовес секундной стрелки */
+        .hand.second::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: calc(var(--size) * -0.08);
+            width: 1.8px;
+            height: calc(var(--size) * 0.08);
+            margin-left: -0.9px;
+            background: #e11d48;
+            border-radius: 100px;
         }
 
         .clock-center {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 8px;
-            height: 8px;
-            margin: -4px 0 0 -4px;
-            background: #f43f5e;
+            width: 11px;
+            height: 11px;
+            margin: -5.5px 0 0 -5.5px;
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(244, 63, 94, 0.7);
+            background: radial-gradient(circle at 35% 30%, #fb7185, #be123c);
+            box-shadow:
+                0 0 0 2px rgba(255, 255, 255, 0.95),
+                0 2px 6px rgba(190, 24, 93, 0.45);
+            z-index: 4;
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
+        /* ───────── Текст ───────── */
         h1 {
             font-size: clamp(24px, 5.5vw, 36px);
             font-weight: 700;
@@ -332,7 +377,6 @@
                 padding: 16px;
                 padding-top: max(16px, env(safe-area-inset-top));
                 padding-bottom: max(16px, env(safe-area-inset-bottom));
-                align-items: flex-start;
             }
             .container {
                 padding: 40px 22px;
@@ -357,12 +401,8 @@
                 margin-bottom: 26px;
             }
             .clock {
-                width: 76px;
-                height: 76px;
+                --size: 84px;
             }
-            .hand.hour   { height: 20px; }
-            .hand.minute { height: 26px; }
-            .hand.second { height: 30px; }
             h1 {
                 margin-bottom: 14px;
             }
@@ -388,7 +428,6 @@
                 margin-top: 26px;
                 font-size: 12px;
             }
-            /* Снижаем нагрузку от размытия на мобильных */
             body::before,
             body::after {
                 filter: blur(70px);
@@ -399,6 +438,7 @@
         /* ───────── Очень узкие экраны ───────── */
         @media (max-width: 360px) {
             .container { padding: 32px 18px; }
+            .clock { --size: 74px; }
             h1 { font-size: 22px; }
             .subtitle { font-size: 14px; }
             .details { font-size: 13px; }
@@ -423,10 +463,11 @@
         </div>
 
         <div class="clock-wrapper">
-            <div class="clock">
-                <div class="hand hour"></div>
-                <div class="hand minute"></div>
-                <div class="hand second"></div>
+            <div class="clock" role="img" aria-label="Часы, показывающие текущее время">
+                <div class="ticks" id="ticks"></div>
+                <div class="hand hour" id="hourHand"></div>
+                <div class="hand minute" id="minuteHand"></div>
+                <div class="hand second" id="secondHand"></div>
                 <div class="clock-center"></div>
             </div>
         </div>
@@ -467,5 +508,52 @@
             © 2026 intown-app.ru
         </div>
     </div>
+
+    <script>
+        (function () {
+            var ticksEl   = document.getElementById('ticks');
+            var hourHand  = document.getElementById('hourHand');
+            var minuteHand = document.getElementById('minuteHand');
+            var secondHand = document.getElementById('secondHand');
+
+            /* Генерируем 12 делений: каждое 3-е — крупное */
+            var frag = document.createDocumentFragment();
+            for (var i = 0; i < 12; i++) {
+                var tick = document.createElement('span');
+                tick.className = 'tick' + (i % 3 === 0 ? ' major' : '');
+                tick.style.setProperty('--i', i);
+                frag.appendChild(tick);
+            }
+            ticksEl.appendChild(frag);
+
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function render() {
+                var now = new Date();
+                var ms  = now.getMilliseconds();
+                var s   = now.getSeconds() + ms / 1000;
+                var m   = now.getMinutes() + s / 60;
+                var h   = (now.getHours() % 12) + m / 60;
+
+                secondHand.style.transform = 'rotate(' + (s * 6) + 'deg)';
+                minuteHand.style.transform = 'rotate(' + (m * 6) + 'deg)';
+                hourHand.style.transform   = 'rotate(' + (h * 30) + 'deg)';
+            }
+
+            if (reduceMotion) {
+                /* Без плавного хода: обновление строго раз в секунду */
+                (function tick() {
+                    render();
+                    setTimeout(tick, 1000 - (Date.now() % 1000));
+                })();
+            } else {
+                /* Плавный ход через requestAnimationFrame */
+                (function loop() {
+                    render();
+                    requestAnimationFrame(loop);
+                })();
+            }
+        })();
+    </script>
 </body>
 </html>
